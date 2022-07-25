@@ -16,7 +16,9 @@ const checkText = require("./utility.js");
  */
 const getData = async (url = "") => {
   const response = await fetch(url);
-  return response.json();
+  if (response.ok) {
+    return response.json();
+  }
 };
 
 /**
