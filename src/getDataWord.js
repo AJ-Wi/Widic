@@ -2,7 +2,7 @@
 
 "use strict";
 const { SCHCOOL_API_URL, SCHCOOL_API_KEY } = require("./config.js");
-const checkText = require("./utility.js");
+const { checkText, checkID } = require("./utility.js");
 
 /**
  * Get the data from the url
@@ -19,6 +19,7 @@ const getData = async (url = "") => {
   if (response.ok) {
     return response.json();
   }
+  throw new Error(response.statusText);
 };
 
 /**
@@ -27,13 +28,27 @@ const getData = async (url = "") => {
  * @returns {Promise<object>}
  */
 const getDataWord = async (word) => {
-  const check = checkText(word);
-  if (check) return check;
+  if (checkText(word)) return checkText(word);
 
   const data = await getData(SCHCOOL_API_URL + word + "?key=" + SCHCOOL_API_KEY);
-  let IPA = data[0].hwi.prs[0].mw;
-  let audio = data[0].hwi.prs[0].sound.audio;
-  let definition = data[0].shortdef[0];
+  let wordID = checkID(data[0].meta.id);
+  let definition = "Not found";
+  let audio = "Not found";
+  let IPA = "Not found";
+
+  if (wordID !== word) {
+    return { word: wordID };
+  }
+
+  data.forEach((item) => {
+    let wID = checkID(item.meta.id);
+
+    if (item.hwi.prs !== undefined && wID === word) {
+      IPA = item.hwi.prs[0].mw;
+      audio = item.hwi.prs[0].audio;
+      definition = item.shortdef[0];
+    }
+  });
   return { word, IPA, definition, audio };
 };
 
