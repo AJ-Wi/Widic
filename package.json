@@ -1,0 +1,13 @@
+{
+  "name": "aj-learning",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node ./index.js"
+  },
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
+}
