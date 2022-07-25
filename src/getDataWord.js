@@ -2,6 +2,7 @@
 
 "use strict";
 const { SCHCOOL_API_URL, SCHCOOL_API_KEY } = require("./config.js");
+const checkText = require("./utility.js");
 
 /**
  * Get the data from the url
@@ -24,6 +25,9 @@ const getData = async (url = "") => {
  * @returns {Promise<object>}
  */
 const getDataWord = async (word) => {
+  const check = checkText(word);
+  if (check) return check;
+
   const data = await getData(SCHCOOL_API_URL + word + "?key=" + SCHCOOL_API_KEY);
   let IPA = data[0].hwi.prs[0].mw;
   let audio = data[0].hwi.prs[0].sound.audio;

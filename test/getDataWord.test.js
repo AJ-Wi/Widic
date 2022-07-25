@@ -22,4 +22,19 @@ describe("getDataWord", () => {
     const data = await getDataWord("baseball");
     expect(data.audio).toBe("baseba01");
   });
+
+  it("should return error message", async () => {
+    const data = await getDataWord("");
+    expect(data).toBe("Please enter a word");
+  });
+
+  it("should return error message", async () => {
+    const data = await getDataWord(1);
+    expect(data).toBe("word must be a string");
+  });
+
+  it("should return error message", async () => {
+    const data = await getDataWord("baseball baseball");
+    expect(data).toBe("Please enter only one word");
+  });
 });
