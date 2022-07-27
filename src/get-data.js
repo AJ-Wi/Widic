@@ -16,7 +16,7 @@ const getData = async (url = "") => {
   if (response.ok) {
     return response.json();
   }
-  throw new Error(response.statusText);
+  return "getData " + response.statusText;
 };
 
 module.exports = getData;
