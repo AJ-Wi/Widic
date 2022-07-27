@@ -1,11 +1,12 @@
 {
-  "name": "aj-learning",
+  "name": "widic",
   "version": "0.0.1",
   "private": true,
-  "main": "index.js",
+  "bin": "cli.js",
   "scripts": {
     "test": "jest",
-    "start": "node ./index.js"
+    "dev": "node ./src/index.js",
+    "start": "./cli.js"
   },
   "devDependencies": {
     "jest": "^28.1.3"
