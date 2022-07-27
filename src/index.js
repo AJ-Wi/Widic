@@ -5,6 +5,8 @@ const getWordsArrayData = require("./get-words-array-data");
 const getWordData = require("./get-word-data");
 const writeJSON = require("./write-json");
 const translator = require("./translator");
+const { downloadAudio } = require("./download-audio");
+const msg = require("./message");
 
 /**
  * get words array data.
@@ -18,7 +20,7 @@ const translator = require("./translator");
  *
  * @param {array} words - words array.
  * @param {number} length - length of words array or length needed.
- * @returns {Promise<array>} words array data.
+ * @returns {Promise<object>} words object data.
  */
 const getAll = async (words, length) => {
   const wordsArrayData = await getWordsArrayData(words, length);
@@ -33,6 +35,29 @@ const getAll = async (words, length) => {
 const getWord = async (word) => {
   const wordData = await getWordData(word);
   return wordData;
+};
+
+/**
+ * Download the audio file
+ * @param {string} audio - the audio file name to download
+ * @param {string} path - the path to save the audio file
+ * @returns {Promise<void>}
+ */
+const downloadAudioFile = async (audio, path) => {
+  const response = await downloadAudio(audio, path);
+  if (response === true) msg.success("Done downloaded audio file");
+};
+
+/**
+ * Download the audio file from array
+ * @param {array} words - the audio file name to download
+ * @param {string} path - the path to save the audio file
+ * @returns {Promise<void>}
+ */
+const downloadAudioFilesFromArray = async (words, path) => {
+  words.forEach((word) => {
+    downloadAudioFile(word.audio, path);
+  });
 };
 
 /**
@@ -57,14 +82,18 @@ const writeFile = (data, file) => {
 
 /**
  * Get word data from Merriam-Webster's schcool API
- * @property getAll() - get words array data.
+ * @property getAll() - get words object data.
  * @property getWord() - Get the data for the word
+ * @property downloadAudioFile() - Download the audio file
+ * @property downloadAudioFilesFromArray() - Download the audio file from array
  * @property translate() - Get the translation from the text
  * @property writeFile() - write JSON to file.
  */
 const widic = {
   getAll,
   getWord,
+  downloadAudioFile,
+  downloadAudioFilesFromArray,
   translate,
   writeFile,
 };
