@@ -1,4 +1,4 @@
 node_modules 
 .env
 *.json
-./audios
+*.mp3

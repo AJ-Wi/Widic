@@ -7,4 +7,5 @@ test("writeJSON", () => {
   };
   writeJSON(data, "test.json");
   expect(fs.existsSync("./test.json")).toBe(true);
+  fs.rmSync("./test.json");
 });

@@ -11,7 +11,7 @@ const fs = require("fs");
  * Download the audio file
  * @param {string} audio - the audio file name to download
  * @param {string} path - the path to save the audio file
- * @returns {Promise<boolean>}
+ * @returns {Promise<void>}
  */
 const downloadAudio = async (audio, path) => {
   msg.info(`Downloading audio file ${audio}.mp3...`);
@@ -20,10 +20,17 @@ const downloadAudio = async (audio, path) => {
       if (response.statusCode === 200) {
         const file = fs.createWriteStream(`${path}${audio}.mp3`);
         response.pipe(file);
+        file
+          .on("finish", () => {
+            file.close;
+            msg.success(`Audio file ${audio}.mp3 downloaded successfully.`);
+          })
+          .on("error", () => {
+            msg.error(`Error Audio file ${audio}.mp3 downloaded.`);
+          });
       }
     })
     .on("error", (err) => msg.error(err));
-  return true;
 };
 
 /**
