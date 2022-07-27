@@ -14,11 +14,11 @@ function message(type, style = "") {
 }
 
 const msg = {
-  info: message("info", "\x1b[44m"),
-  warn: message("warn", "\x1b[43m"),
-  error: message("error", "\x1b[41m"),
-  success: message("success", "\x1b[42m"),
-  debug: message("debug", "\x1b[46m"),
+  info: message("info", "\x1b[34m"),
+  warn: message("warn", "\x1b[33m"),
+  error: message("error", "\x1b[31m"),
+  success: message("success", "\x1b[32m"),
+  debug: message("debug", "\x1b[36m"),
   log: message("log"),
 };
 

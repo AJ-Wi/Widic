@@ -4,9 +4,10 @@
   "private": true,
   "bin": "cli.js",
   "scripts": {
-    "test": "jest",
     "dev": "node ./src/index.js",
-    "start": "./cli.js"
+    "start": "./cli.js",
+    "test": "jest",
+    "test-msg": "node ./test/message-test.js"
   },
   "devDependencies": {
     "jest": "^28.1.3"
