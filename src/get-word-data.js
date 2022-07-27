@@ -22,7 +22,8 @@ const getWordData = async (word) => {
   let IPA = "Not found";
 
   if (wordID !== word) {
-    return { word: wordID };
+    const subData = await getWordData(wordID);
+    return subData;
   }
 
   data.forEach((item) => {
