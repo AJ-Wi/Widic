@@ -11,13 +11,18 @@ const fs = require("fs");
  * Download the audio file
  * @param {string} audio - the audio file name to download
  * @param {string} path - the path to save the audio file
- * @returns {Promise<string|boolean>}
+ * @returns {Promise<boolean>}
  */
 const downloadAudio = async (audio, path) => {
-  if (checkText(audio)) return checkText(audio);
-  msg.info("Downloading audio file...");
-  const file = fs.createWriteStream(`${path}${audio}.mp3`);
-  https.get(getUrl(audio), (response) => response.pipe(file)).on("error", (err) => msg.error(err));
+  msg.info(`Downloading audio file ${audio}.mp3...`);
+  https
+    .get(getUrl(audio), (response) => {
+      if (response.statusCode === 200) {
+        const file = fs.createWriteStream(`${path}${audio}.mp3`);
+        response.pipe(file);
+      }
+    })
+    .on("error", (err) => msg.error(err));
   return true;
 };
 
