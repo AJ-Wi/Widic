@@ -8,12 +8,14 @@ const { checkText, checkID } = require("./utility.js");
 /**
  * Get the data for the word from the schcool api.
  * @param {string} word - the word to get the data
- * @returns {Promise<object>}
+ * @returns {Promise<object|string>}
  */
 const getWordData = async (word) => {
   if (checkText(word)) return checkText(word);
 
   const data = await getData(SCHCOOL_API_URL + word + "?key=" + SCHCOOL_API_KEY);
+  if (data instanceof String) return data;
+
   let wordID = checkID(data[0].meta.id);
   let definition = "Not found";
   let audio = "Not found";
