@@ -1,6 +1,6 @@
 //@ts-check
 "use strict";
-var translate = require("node-google-translate-skidz");
+const translate = require("node-google-translate-skidz");
 const { checkText } = require("./utility.js");
 
 /**
