@@ -4,7 +4,7 @@
   "private": true,
   "bin": "cli.js",
   "scripts": {
-    "dev": "node ./src/index.js",
+    "example": "node ./example/index.js",
     "start": "./cli.js",
     "test": "jest",
     "test-msg": "node ./test/message-test.js",
