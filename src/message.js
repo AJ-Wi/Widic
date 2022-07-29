@@ -8,8 +8,8 @@
  */
 function message(type, style = "") {
   /** @param {string} msg */
-  return (msg) => {
-    console.log(`${style} ${type}: ${msg} \x1b[0m`);
+  return (msg, ...extra) => {
+    console.log(`${style} ${type}: ${msg} \x1b[0m ${extra.join(" ")}`);
   };
 }
 

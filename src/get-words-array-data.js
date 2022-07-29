@@ -29,14 +29,14 @@ const getWordsArrayData = async (words, length) => {
         errorWords.push(words[i].word);
         continue;
       }
-
-      msg.info(`processing new word data: ${i} `, data);
+      let processing = JSON.stringify(data);
+      msg.info(`processing new word data: ${i} `, processing);
       arrayData.push(data);
     }
     msg.info("Done getting words array data!");
     return { arrayData, errorWords };
   } catch (err) {
-    msg.error("getWordsArrayData ", err);
+    msg.error(`getWordsArrayData ${err}`);
     return { arrayData, errorWords };
   }
 };

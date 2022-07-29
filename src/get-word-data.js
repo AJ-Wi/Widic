@@ -16,10 +16,11 @@ const getWordData = async (word) => {
   const data = await getData(SCHCOOL_API_URL + word + "?key=" + SCHCOOL_API_KEY);
   if (data instanceof String) return data;
 
-  let wordID = checkID(data[0].meta.id);
   let definition = "Not found";
   let audio = "Not found";
   let IPA = "Not found";
+  if (data[0].meta === undefined) return { word, IPA, definition, audio };
+  let wordID = checkID(data[0].meta.id);
 
   if (wordID !== word) {
     const subData = await getWordData(wordID);
@@ -31,7 +32,9 @@ const getWordData = async (word) => {
 
     if (item.hwi.prs !== undefined && wID === word) {
       IPA = item.hwi.prs[0].mw;
-      audio = item.hwi.prs[0].sound.audio;
+      if (item.hwi.prs[0].sound !== undefined) {
+        audio = item.hwi.prs[0].sound.audio;
+      }
       definition = item.shortdef[0];
     }
   });
