@@ -3,11 +3,17 @@ const fs = require("fs");
 
 describe("downloadAudio", () => {
   it("should return true if the audio of a word exists", async () => {
-    downloadAudio("baseba01", "./audios/").then(expect(fs.existsSync(`./audios/baseba01.mp3`)).toBe(true));
+    downloadAudio("baseba01", "./audio/", (err) => {
+      if (err) console.log(err);
+      expect(fs.existsSync(`./audio/baseba01.mp3`)).toBe(true);
+    });
   });
 
   it("should return false if the audio of a word not exists", async () => {
-    downloadAudio("widic", "./audios/").then(expect(fs.existsSync(`./audios/widic.mp3`)).toBe(false));
+    downloadAudio("widic", "./audio/", (err) => {
+      if (err) console.log(err);
+      expect(fs.existsSync(`./audio/widic.mp3`)).toBe(false);
+    });
   });
 });
 
