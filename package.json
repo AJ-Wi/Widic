@@ -1,6 +1,7 @@
 {
   "name": "widic",
   "version": "0.0.1",
+  "description": "A simple implementation to consume the API from https://www.dictionaryapi.com/",
   "private": true,
   "bin": "cli.js",
   "scripts": {
