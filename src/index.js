@@ -1,11 +1,12 @@
 // @ts-check
 
 "use strict";
+const config = require("./config");
 const getWordsArrayData = require("./get-words-array-data");
 const getWordData = require("./get-word-data");
 const writeJSON = require("./write-json");
 const translator = require("./translator");
-const { downloadAudio } = require("./download-audio");
+const { downloadAudio, getUrl } = require("./download-audio");
 const msg = require("./message");
 
 /**
@@ -43,7 +44,7 @@ const getWord = async (word) => {
  * @param {string} path - the path to save the audio file
  * @returns {Promise<void>}
  */
-const downloadAudioFile = async (audio, path) => {
+const downloadAudioFile = async (audio, path = "./") => {
   downloadAudio(audio, path);
 };
 
@@ -75,8 +76,10 @@ const translate = async (text) => {
  * @param {string} file - the file to write to
  * @returns {void} - writes the data to the file
  */
-const writeFile = (data, file) => {
+const writeFile = (data, file = "./widic-output.json") => {
+  if (!config.SILENT) msg.info(`Writing to file: ${file}`);
   writeJSON(data, file);
+  if (!config.SILENT) msg.success(`Wrote to file: ${file}`);
 };
 
 /**
@@ -95,6 +98,7 @@ const widic = {
   downloadAudioFilesFromArray,
   translate,
   writeFile,
+  getUrl,
 };
 
 module.exports = widic;

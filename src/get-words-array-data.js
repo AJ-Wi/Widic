@@ -1,5 +1,6 @@
 // @ts-check
 "use strict";
+const { SILENT } = require("./config");
 const getWordData = require("./get-word-data.js");
 const msg = require("./message.js");
 
@@ -17,10 +18,10 @@ const msg = require("./message.js");
  * @param {number} length - length of words array or length needed.
  * @returns {Promise<object>} words object data.
  */
-const getWordsArrayData = async (words, length) => {
+const getWordsArrayData = async (words, length = words.length) => {
   const arrayData = [];
   const errorWords = [];
-  msg.info("Getting words array data...");
+  if (!SILENT) msg.info("Getting words array data...");
   try {
     for (let i = 0; i < length; i++) {
       let data = await getWordData(words[i].word);
@@ -29,11 +30,10 @@ const getWordsArrayData = async (words, length) => {
         errorWords.push(words[i].word);
         continue;
       }
-      let processing = JSON.stringify(data);
-      msg.info(`processing new word data: ${i} `, processing);
+      if (!SILENT) msg.info(`processing new word data: ${i} `, words[i].word);
       arrayData.push(data);
     }
-    msg.info("Done getting words array data!");
+    if (!SILENT) msg.info("Done getting words array data!");
     return { arrayData, errorWords };
   } catch (err) {
     msg.error(`getWordsArrayData ${err}`);
