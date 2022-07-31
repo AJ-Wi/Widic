@@ -1,7 +1,7 @@
 // @ts-check
 
 "use strict";
-const { AUDIO_API_URL, BEGINS } = require("./config.js");
+const { AUDIO_API_URL, BEGINS, SILENT } = require("./config.js");
 const { checkText } = require("./utility.js");
 const msg = require("./message.js");
 const https = require("https");
@@ -14,7 +14,11 @@ const fs = require("fs");
  * @returns {Promise<void>}
  */
 const downloadAudio = async (audio, path) => {
-  msg.info(`Downloading audio file ${audio}.mp3...`);
+  if (audio === "Not found") {
+    msg.error(`Audio file ${audio}.mp3 downloaded.`);
+    return;
+  }
+  if (!SILENT) msg.info(`Downloading audio file ${audio}.mp3...`);
   https
     .get(getUrl(audio), (response) => {
       if (response.statusCode === 200) {
@@ -23,7 +27,7 @@ const downloadAudio = async (audio, path) => {
         file
           .on("finish", () => {
             file.close;
-            msg.success(`Audio file ${audio}.mp3 downloaded successfully.`);
+            if (!SILENT) msg.success(`Audio file ${audio}.mp3 downloaded successfully.`);
           })
           .on("error", () => {
             msg.error(`Error Audio file ${audio}.mp3 downloaded.`);
