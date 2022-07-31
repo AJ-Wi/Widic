@@ -13,7 +13,7 @@ const fs = require("fs");
  * @param {string} path - the path to save the audio file
  * @returns {Promise<void>}
  */
-const downloadAudio = async (audio, path) => {
+const downloadAudio = async (audio, path, callback) => {
   if (audio === "Not found") {
     msg.error(`Audio file ${audio}.mp3 downloaded.`);
     return;
@@ -26,8 +26,7 @@ const downloadAudio = async (audio, path) => {
         response.pipe(file);
         file
           .on("finish", () => {
-            file.close;
-            if (!SILENT) msg.success(`Audio file ${audio}.mp3 downloaded successfully.`);
+            file.close(callback);
           })
           .on("error", () => {
             msg.error(`Error Audio file ${audio}.mp3 downloaded.`);
