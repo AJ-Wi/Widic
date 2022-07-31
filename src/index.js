@@ -45,7 +45,10 @@ const getWord = async (word) => {
  * @returns {Promise<void>}
  */
 const downloadAudioFile = async (audio, path = "./") => {
-  downloadAudio(audio, path);
+  downloadAudio(audio, path, (err) => {
+    if (err) msg.error(err);
+    if (!config.SILENT) msg.success(`Audio file ${audio}.mp3 downloaded successfully.`);
+  });
 };
 
 /**
